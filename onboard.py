@@ -1,7 +1,7 @@
 from pathlib import Path  
 from json import dumps,load
 from os import path,makedirs
-from pyinputplus import inputURL,inputPassword,inputInt,inputYesNo,inputStr
+from pyinputplus import inputURL,inputPassword,inputInt,inputYesNo,inputStr,inputNum
 
 path_str=str(Path.home())+r"/.pyclaw"
 filepath_str=path_str+r"/config.json"
@@ -18,8 +18,10 @@ def config_file_creator(mode):
 	data["ai_api_key"]=ai_api_key
 	brave_api_key=inputPassword("Enter Brave Search API Key: ")
 	data["brave_api_key"]=brave_api_key
-	max_tokens=inputInt(prompt = "Enter Max Tokens [Click Enter for 8192]: ",default = 8192,blank=True)	
+	max_tokens=inputInt("Enter Max Tokens [Click Enter for 8192]: ",default = 8192,blank=True)	
 	data["max_tokens"] = 8192 if max_tokens == "" else max_tokens
+	temperature= inputNum("Enter Max Tokens [Click Enter for 8192]: ",default = 0.7,blank=True)
+	data["temperature"] = 0.7 if temperature == "" else temperature
 	agent_name=inputStr("Enter Agent Name [Click Enter to leave it blank]: ",blank=True,default="PyClaw")
 	data["agent_name"]=agent_name
 	json_str=dumps(data,indent=4)
