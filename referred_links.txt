@@ -1,0 +1,2 @@
+https://www.geeksforgeeks.org/python/pyinputplus-module-in-python/
+https://www.geeksforgeeks.org/python/reading-and-writing-json-to-a-file-in-python/
