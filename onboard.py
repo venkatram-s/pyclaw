@@ -39,7 +39,7 @@ def check_onboard_already_exists():
 			pass
 	else:
 		print("PyClaw Configuration:\nAdd your API key to "+filepath_str,"\n     Recommended:\n"+"""     - OpenRouter: https://openrouter.ai/keys (access 100+ models)\n     - Ollama:     https://ollama.com (local, free)""")
-		makedirs(path_str)
+		makedirs(path_str,exist_ok=True)
 		config_file_creator(mode="a")
 
 def load_config():
@@ -48,3 +48,4 @@ def load_config():
 		with open(filepath_str, "r") as f:
 			data=load(f)
 	return data
+check_onboard_already_exists()
