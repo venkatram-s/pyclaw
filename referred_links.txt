@@ -1,3 +1,4 @@
 https://www.geeksforgeeks.org/python/pyinputplus-module-in-python/
 https://www.geeksforgeeks.org/python/reading-and-writing-json-to-a-file-in-python/
 https://www.geeksforgeeks.org/python/usage-of-__main__-py-in-python/
+https://realpython.com/command-line-interfaces-python-argparse/#adding-subcommands-to-your-clis
