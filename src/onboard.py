@@ -30,17 +30,20 @@ def config_file_creator(mode):
 	print("config folder and files have been created")
 
 def check_onboard_already_exists():
-	if (path.exists(path_str) and path.exists(filepath_str)):
-		print(f"Path: {path_str} already exists!")
-		opt=inputYesNo("Do you want to recreate a config.json file? (Yes / No): ")
-		if (opt=="yes"):
-			config_file_creator(mode="w")
+	try:
+		if (path.exists(path_str) and path.exists(filepath_str)):
+			print(f"Path: {path_str} already exists!")
+			opt=inputYesNo("Do you want to recreate a config.json file? (Yes / No): ")
+			if (opt=="yes"):
+				config_file_creator(mode="w")
+			else:
+				pass
 		else:
-			pass
-	else:
-		print("PyClaw Configuration:\nAdd your API key to "+filepath_str,"\n     Recommended:\n"+"""     - OpenRouter: https://openrouter.ai/keys (access 100+ models)\n     - Ollama:     https://ollama.com (local, free)""")
-		makedirs(path_str,exist_ok=True)
-		config_file_creator(mode="a")
+			print("PyClaw Configuration:\nAdd your API key to fonfig.json:"+"\n     Recommended:\n"+"""     - OpenRouter: https://openrouter.ai/keys (access 100+ models)\n     - Ollama:     https://ollama.com (local, free)""")
+			makedirs(path_str,exist_ok=True)
+			config_file_creator(mode="a")
+	except KeyboardInterrupt:
+		print("\nUser interrupted! Type onboard")
 
 def load_config():
 	data=None
@@ -48,4 +51,3 @@ def load_config():
 		with open(filepath_str, "r") as f:
 			data=load(f)
 	return data
-check_onboard_already_exists()
