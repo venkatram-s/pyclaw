@@ -1,10 +1,12 @@
 from argparse import ArgumentParser
+from src.groq_ai import * 
 from src.onboard import *
 from sys import version
 python_ver=version[0:4]
 
 #Inspired from PicoCLaw (https://github.com/sipeed/picoclaw/)
-help_str="""Usage: pyclaw <command>\nCommands:\n- onboard     Initialize pyclaw configuration\n- query     single question, single answer, exits immediately\n- agent     single question, single answer, exits immediately\n- cron        Manage scheduled tasks\n- version     Show version information\n- help     Show help information"""
+
+help_str="""Usage: pyclaw <command>\nCommands:\n- onboard     Initialize pyclaw configuration\n- query     single question, single answer, exits immediately\n- chat     Continous Conversation\n- cron        Manage scheduled tasks\n- version     Show version information\n- help     Show help information"""
 pyclaw_ver="0.0.1"
 
 def main():
@@ -20,10 +22,18 @@ def main():
 		print(help_str)
 	if (args.command=="version"):
 		print(f"Pyclaw {pyclaw_ver} runs on Python {python_ver}")
-	if (args.command=="agent"):
-		pass
+	if (args.command=="chat"):
+		try:
+			while (True):
+				prompt = input("You: ")
+				if prompt in ['exit','EXIT','Exit','quit','QUIT','Quit']:
+					break
+				print("AI: " + chat(prompt))
+			print("Goodbye")
+		except KeyboardInterrupt:
+			print("\nGoodbye")
 	if (args.command=="query"):
-		pass
-
+		prompt = input("You: ")
+		print("AI: " + chat(prompt))
 if __name__=="__main__":
 	main()
