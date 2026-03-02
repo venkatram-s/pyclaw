@@ -13,6 +13,7 @@ def load_config():
 
 def chat(message):
   config=load_config()
+  agent_name=load_config()['agent_name']
   client = Groq(api_key=(config['ai_api_key']))
   chat_completion = client.chat.completions.create(
     messages=[
@@ -23,4 +24,4 @@ def chat(message):
     ],temperature=config['temperature'],
     max_completion_tokens=config['max_tokens'],
     model=config['model_name'])
-  return chat_completion.choices[0].message.content
+  return  agent_name+" "+chat_completion.choices[0].message.content
