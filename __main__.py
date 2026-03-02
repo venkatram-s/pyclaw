@@ -28,12 +28,12 @@ def main():
 				prompt = input("You: ")
 				if prompt in ['exit','EXIT','Exit','quit','QUIT','Quit']:
 					break
-				print("AI: " + chat(prompt))
+				print(chat(prompt))
 			print("Goodbye")
 		except KeyboardInterrupt:
 			print("\nGoodbye")
 	if (args.command=="query"):
 		prompt = input("You: ")
-		print("AI: " + chat(prompt))
+		print(chat(prompt))
 if __name__=="__main__":
 	main()
