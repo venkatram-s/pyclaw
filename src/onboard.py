@@ -11,7 +11,7 @@ def config_file_creator(mode):
 	data["provider_name"]=inputStr("Enter provider Name: ",blank=False)
 	data["model_name"]=inputStr("Enter Model Name: ",blank=False)
 	data["ai_api_key"]=inputPassword("Enter AI API Key: ")
-	data["brave_api_key"]=inputPassword("Enter Brave Search API Key: ")
+	data["langsearch_api_key"]=inputPassword("Enter Langsearch API Key: ")
 	max_tokens=inputInt("Enter Max Tokens [Click Enter for 8192]: ",default = 8192,blank=True)	
 	data["max_tokens"] = 8192 if max_tokens == "" else max_tokens
 	temperature = inputNum("Enter Temperature [Click Enter for 0.7]: ",default = 0.7,blank=True,min=0.0,max=1.0)
