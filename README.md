@@ -1,162 +1,130 @@
 # PyClaw
 
-**PyClaw** is a Python-based AI assistant designed to manage conversational queries and tasks. Inspired by [PicoClaw](https://github.com/sipeed/picoclaw), PyClaw aims to deliver an easy and extensible command-line interface for AI-powered utilities.
+A Python CLI for talking to AI models. Inspired by [PicoClaw](https://github.com/sipeed/picoclaw) - built with security, extensibility, and cross-platform support in mind.
 
 ---
 
-## **Table of Contents**
-1. [Project Summary](#project-summary)
-2. [Technology Stack](#technology-stack)
-3. [Project Structure](#project-structure)
-4. [Core Features](#core-features)
-5. [Getting Started](#getting-started)
-6. [Architecture](#architecture)
-7. [Development](#development)
-8. [Performance & Scalability](#performance--scalability)
-9. [Community & Maintenance](#community--maintenance)
-10. [Notable Aspects](#notable-aspects)
+## Table of Contents
+1. [What it does](#what-it-does)
+2. [Stack](#stack)
+3. [Project structure](#project-structure)
+4. [Features](#features)
+5. [Getting started](#getting-started)
+6. [How it works](#how-it-works)
+7. [Upcoming features](#upcoming-features)
+8. [Contributing](#contributing)
+9. [Maintenance](#maintenance)
 
 ---
 
-## **Project Summary**
-- **Purpose:** 
-  PyClaw facilitates interaction through AI configurations, delivering conversational capabilities with on-demand task scheduling for developers and end-users.
-- **Primary Use Cases:**
-  - Managing API configurations for Groq and Brave using Python.
-  - Delivering single-session conversational AI capabilities.
-  - Managing and scheduling tasks using CLI commands (`cron`).
-  
----
+## What it does
 
-## **Technology Stack**
-- **Language(s):** Python (100%)
-- **Libraries and Dependencies:**
-  - `pyinputplus`: Input validation for CLI configuration.
-  - `groq`: Integration for AI-driven responses.
-- **Python Version Requirements:** Python 3.8 or newer.
+PyClaw gives you a command-line interface for AI conversations - quick one-off queries, back-and-forth chat sessions, and scheduled tasks. Configuration lives in `~/.pyclaw/config.json` and is set up through a guided onboarding flow.
+
+Main use cases:
+- Single queries and continuous conversations via Groq
+- Scheduled jobs via `cron`
 
 ---
 
-## **Project Structure**
-### **Main Directories**
-- `src/`: Contains the primary modules for configuration setup and AI integration.
-  
-### **Key Files**
-- `__main__.py`: Entry point of the application; handles CLI commands like `onboard`, `chat`, and `cron`.
-- `src/onboard.py`: Manages configuration setup through JSON files for the AI models.
-- `src/groq_ai.py`: Interfaces directly with the Groq API for conversational tasks.
+## Stack
+
+- **Python 3.8+**
+- `pyinputplus` - input validation during onboarding
+- `groq` - Groq API
+- `requests` - LangSearch integration (upcoming)
 
 ---
 
-## **Core Features**
-- **Conversational AI Interaction:**
-  - Single-query and continuous conversation capabilities with `chat` and `query` commands.
-- **Onboarding and Configuration:**
-  - Guided CLI setup for API keys, model configurations, and optional parameters.
-- **Task Scheduling:**
-  - Manage scheduled tasks using a `cron` command.
-  
----
+## Project structure
 
-## **Getting Started**
-### **Installation**
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/venkatram-s/pyclaw.git
-   cd pyclaw
-   ```
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-### **Configuration**
-- Use the following command to set up required API keys and parameters:
-  ```bash
-  python __main__.py onboard
-  ```
-
-### **Usage**
-PyClaw comes with multiple commands:
-- **Onboarding configuration:**
-  ```bash
-  python __main__.py onboard
-  ```
-- **Chat functionality:**
-  ```bash
-  python __main__.py chat
-  ```
-- **Single query:**
-  ```bash
-  python __main__.py query
-  ```
-- **Task scheduling:**
-  ```bash
-  python __main__.py cron
-  ```
+```
+pyclaw/
+├── __main__.py       # entry point, routes CLI commands
+└── src/
+    ├── onboard.py    # config setup and personality onboarding
+    └── ai.py         # Groq API calls and system prompt builder
+```
 
 ---
 
-## **Architecture**
-### **Design Patterns**
-- Modular CLI structure: distinct modules handle onboarding, AI integration, and command parsing.
+## Features
 
-### **Component Interaction**
-- `__main__.py`: Entry point for all commands.
-- `src/onboard.py`: Handles JSON configuration creation.
-- `src/groq_ai.py`: Executes AI-related tasks and manages responses.
+**Query mode** - ask one question, get one answer, done.
 
-### **Data Flow**
-- Commands are processed through CLI, and required configurations and tasks are delegated to relevant modules.
+**Chat mode** - back-and-forth conversation that remembers context for the session.
+
+**Onboarding** - walks you through API keys, model settings on first run.
+
+**Markdown stripping** - responses are cleaned up for terminal output. No stray `**bold**` leaking into your shell.
 
 ---
 
-## **Development**
-- **To Contribute:**
-  1. Fork the repository.
-  2. Create a feature branch.
-  3. Open a pull request.
+## Getting started
 
-- **Testing Approach:**
-  - Manually test all commands like `onboard`, `chat`, and `query` for robustness.
+```bash
+git clone https://github.com/venkatram-s/pyclaw.git
+cd pyclaw
+pip install -r requirements.txt
+```
 
-- **Code Quality Tools:**
-  - Use tools like `pylint` and `flake8` to ensure code quality.
+Run onboarding first:
 
-- **CI/CD Pipeline:**
-  - Not implemented yet; GitHub Actions can be integrated for automated testing.
+```bash
+python __main__.py onboard
+```
+
+It asks for your API keys, model name, and how you want the AI to behave. Everything gets saved to `~/.pyclaw/config.json`.
+
+### Commands
+
+| Command | What it does |
+|---|---|
+| `python __main__.py onboard` | first-time setup, or reconfigure |
+| `python __main__.py query` | single question, single answer |
+| `python __main__.py chat` | start a conversation |
+| `python __main__.py cron` | manage scheduled tasks |
+| `python __main__.py version` | show version |
+| `python __main__.py help` | show help |
 
 ---
 
-## **Performance & Scalability**
-- **Known Limitations:**
-  - Relies on external APIs (Groq/Brave); subject to rate limits.
-  - Manual onboarding of configurations.
-- **Performance:**
-  - Lightweight application but dependent on API response times.
-- **Scalability:**
-  - JSON-based configuration may not be suitable for larger setups. Transitioning to a database-backed solution could improve scalability.
+## How it works
+
+`__main__.py` parses the command and routes it. `onboard.py` handles config creation. `ai.py` builds the system prompt from your personality settings and makes the API call.
+
+The flow is: command -> `__main__.py` -> `src/` module -> Groq -> output to terminal.
+
+A few known limitations worth being upfront about:
+- API rate limits apply (Groq)
+- Cron jobs don't survive process restarts yet
+- API keys are currently stored in plaintext - encryption is planned
 
 ---
 
-## **Community & Maintenance**
-- **Project Status:** Active
+## Upcoming features
+
+- **Cron system** - scheduled job runner with markdown templates and file output
+- **LangSearch integration** - wire LangSearch into `ai.py`
+- **System prompt wiring** - pass `build_system_prompt()` as the system message in `chat()` for consistent tone across sessions
+- **Personality onboarding** - add tone, response length, response style, and emoji usage to `onboard.py`, saved in `config.json`
+- **System prompt builder** - build `build_system_prompt()` in `ai.py`
+- **API key encryption** - store API keys securely instead of plaintext
+
+---
+
+## Contributing
+
+1. Fork the repo
+2. Create a feature branch
+3. Open a pull request
+
+Use `pylint` or `flake8` before submitting.
+
+---
+
+## Maintenance
+
+- **Status:** active
 - **Maintainer:** [venkatram-s](https://github.com/venkatram-s)
-
----
-
-## **Notable Aspects**
-- **Strengths:**
-  - Intuitive command-line interface and onboarding process.
-  - Simple, extensible architecture.
-
-- **Areas for Improvement:**
-  - Automate onboarding to detect and reuse existing environments.
-  - Better CLI error handling for interrupted processes.
-
-- **Comparison with Alternatives:**
-  - Unlike heavier AI assistant systems, PyClaw is lightweight and highly developer-friendly.
-
----
-### License
-This repository is currently not licensed. Please contact the maintainer for licensing inquiries.
+- **License:** unlicensed - contact the maintainer for inquiries
