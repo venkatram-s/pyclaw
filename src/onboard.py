@@ -1,7 +1,7 @@
 from pathlib import Path  
 from json import dumps
 from os import path,makedirs
-from pyinputplus import inputURL,inputPassword,inputInt,inputYesNo,inputStr,inputNum
+from pyinputplus import inputURL,inputPassword,inputInt,inputYesNo,inputStr,inputNum,inputChoice
 
 path_str=str(Path.home())+r"/.pyclaw"
 filepath_str=path_str+r"/config.json"
@@ -17,6 +17,14 @@ def config_file_creator(mode):
 	temperature = inputNum("Enter Temperature [Click Enter for 0.7]: ",default = 0.7,blank=True,min=0.0,max=1.0)
 	data["temperature"] = 0.7 if temperature == "" else temperature
 	data["agent_name"]=inputStr("Enter Agent Name [Click Enter to leave it blank]: ",blank=True,default="PyClaw")
+	data["tone"]=inputChoice(["formal", "casual", "blunt", "friendly"],, prompt=f"Pick how you want {data['agent_name']} to respond: ",blank=True)
+
+
+fruit = pyip.(['apple', 'banana'])
+print(f"Chosen fruit: {fruit}")
+
+
+
 	json_str=dumps(data,indent=4)
 	with open(filepath_str,mode) as f:
 		f.write(json_str)
