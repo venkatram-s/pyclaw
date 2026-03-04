@@ -1,5 +1,5 @@
 from argparse import ArgumentParser
-from src.groq_ai import * 
+from src.ai import * 
 from src.onboard import *
 from sys import version
 python_ver=version[0:4]
