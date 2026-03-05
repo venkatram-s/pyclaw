@@ -18,8 +18,8 @@ def config_file_creator(mode):
 	data["temperature"] = 0.7 if temperature == "" else temperature
 	data["agent_name"]=inputStr("Enter Agent Name [Click Enter to leave it blank]: ",blank=True,default="PyClaw")
 	data["tone"]=inputMenu(["formal", "casual", "blunt", "friendly"], prompt=f"Pick how you want {data['agent_name']} to respond [Type at the blinking cursor you see below] : \n",blank=True)
-
-
+	data["response_length"]=inputMenu(["short", "medium", "long", "adhd friendly"], prompt=f"Pick How long should  {data['agent_name']} respond [Type at the blinking cursor you see below] : \n",blank=True)
+	data["use_emojis"]=inputYesNo(f"Do you want {data['agent_name']} to respond with emojis? (Yes / No): ",blank=True)
 	json_str=dumps(data,indent=4)
 	with open(filepath_str,mode) as f:
 		f.write(json_str)
@@ -29,7 +29,7 @@ def check_onboard_already_exists():
 	try:
 		if (path.exists(path_str) and path.exists(filepath_str)):
 			print(f"Path: {path_str} already exists!")
-			opt=inputYesNo("Do you want to recreate a config.json file? (Yes / No): ")
+			opt=inputYesNo("Do you want to recreate a config.json file? (Yes / No): ",blank=True)
 			if (opt=="yes"):
 				config_file_creator(mode="w")
 			else:
