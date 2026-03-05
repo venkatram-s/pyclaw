@@ -107,7 +107,6 @@ A few known limitations worth being upfront about:
 - **Cron system** - scheduled job runner with markdown templates and file output
 - **LangSearch integration** - wire LangSearch into `ai.py`
 - **System prompt wiring** - pass `build_system_prompt()` as the system message in `chat()` for consistent tone across sessions
-- **Personality onboarding** - add tone, response length, response style, and emoji usage to `onboard.py`, saved in `config.json`
 - **System prompt builder** - build `build_system_prompt()` in `ai.py`
 - **API key encryption** - store API keys securely instead of plaintext
 
