@@ -17,7 +17,7 @@ def config_file_creator(mode):
 	temperature = inputNum("Enter Temperature [Click Enter for 0.7]: ",default = 0.7,blank=True,min=0.0,max=1.0)
 	data["temperature"] = 0.7 if temperature == "" else temperature
 	data["agent_name"]=inputStr("Enter Agent Name [Click Enter to leave it blank]: ",blank=True,default="PyClaw")
-	data["tone"]=inputChoice(["formal", "casual", "blunt", "friendly"],, prompt=f"Pick how you want {data['agent_name']} to respond: ",blank=True)
+	data["tone"]=inputMenu(["formal", "casual", "blunt", "friendly"], prompt=f"Pick how you want {data['agent_name']} to respond: ",blank=True)
 
 
 fruit = pyip.(['apple', 'banana'])
