@@ -91,4 +91,4 @@ Use `pylint` or `flake8` before submitting.
 ## Maintenance
 - **Status:** active
 - **Maintainer:** [venkatram-s](https://github.com/venkatram-s)
-- **License:** unlicensed - contact the maintainer for inquiries
+- **License:** GPL v3
