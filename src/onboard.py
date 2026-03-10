@@ -17,10 +17,10 @@ def config_file_creator(mode):
 	data["max_tokens"] = 8192 if max_tokens == "" else max_tokens
 	temperature = inputNum("Enter Temperature [Click Enter for 0.7]: ",default = 0.7,blank=True,min=0.0,max=1.0)
 	data["temperature"] = 0.7 if temperature == "" else temperature
-	data["agent_name"]=inputStr("Enter Agent Name [Click Enter to leave it blank]: ",blank=True,default="PyClaw")
-	data["tone"]=inputMenu(["formal", "casual", "blunt", "friendly"], prompt=f"Pick how you want {data['agent_name']} to respond [Type at the blinking cursor you see below] : \n",blank=True)
-	data["response_length"]=inputMenu(["short", "medium", "long", "adhd-friendly"], prompt=f"Pick How long should {data['agent_name']} respond [Type at the blinking cursor you see below] : \n",blank=True)
-	data["use_emojis"]=inputYesNo(f"Do you want {data['agent_name']} to respond with emojis? (Yes / No): ",blank=True)
+	data["bot_name"]=inputStr("Enter Bot Name [Click Enter to leave it blank]: ",blank=True,default="PyClaw")
+	data["tone"]=inputMenu(["formal", "casual", "blunt", "friendly"], prompt=f"Pick how you want {data['bot_name']} to respond [Type at the blinking cursor you see below] : \n",blank=True)
+	data["response_length"]=inputMenu(["short", "medium", "long", "adhd-friendly"], prompt=f"Pick How long should {data['bot_name']} respond [Type at the blinking cursor you see below] : \n",blank=True)
+	data["use_emojis"]=inputYesNo(f"Do you want {data['bot_name']} to respond with emojis? (Yes / No): ",blank=True)
 	json_str=dumps(data,indent=4)
 	with open(filepath_str,mode) as f:
 		f.write(json_str)
