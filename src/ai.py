@@ -60,15 +60,13 @@ def chat(message,searched=False):
   bot_name=config["bot_name"]
   ai_model=config['model_name']
   client = Groq(api_key=return_api("groq"))
-  try:
-    chat_completion = client.chat.completions.create(
+  chat_completion = client.chat.completions.create(
         messages=[
         {"role": "user","content": system_prompt_constructor(message),}],temperature=config['temperature'],
       max_completion_tokens=config['max_tokens'],
       model=ai_model)
-    content = chat_completion.choices[0].message.content
-  except Exception as e:
-    return bot_name+": Sorry, the model is rate limited. Try again in a moment."
+  content = chat_completion.choices[0].message.content
+  return bot_name+": Sorry, the model is rate limited. Try again in a moment."
   if "[OUTDATED]" in content and not searched:
     return bot_name+": "+strip_md(chat(langsearch(message), searched=True))
   else:
