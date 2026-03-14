@@ -7,7 +7,7 @@ python_ver=version[0:4]
 #Inspired from PicoCLaw (https://github.com/sipeed/picoclaw/)
 
 help_str="""Usage: pyclaw <command>\nCommands:\n- onboard     Initialize pyclaw configuration\n- query     single question, single answer, exits immediately\n- chat     Continous Conversation\n- cron        Manage scheduled tasks\n- version     Show version information\n- help     Show help information"""
-pyclaw_ver="0.0.1"
+pyclaw_ver="0.0.2"
 
 def main():
 	parser = ArgumentParser(prog="pyclaw",description="PyClaw - A Python-based AI Assistant")
@@ -28,7 +28,8 @@ def main():
 				prompt = input("You: ")
 				if prompt in ['exit','EXIT','Exit','quit','QUIT','Quit']:
 					break
-				print(chat(prompt))
+				else:
+					print(chat(prompt))
 			print("Goodbye")
 		except KeyboardInterrupt:
 			print("\nGoodbye")

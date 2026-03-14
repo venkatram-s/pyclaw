@@ -1,5 +1,5 @@
 from groq import Groq
-from src.onboard import filepath_str,get_password
+from src.onboard import filepath_str
 from pathlib import Path
 from os import path
 from json import load,dumps
@@ -46,33 +46,37 @@ def system_prompt_constructor(message):
   - No reproducing copyrighted material. Paraphrase instead.
   - Stay neutral on political and religious topics.
   - Respond in the user's language.
-  Tone: {data["tone"]}. Length: {data["response_length"]}. Emojis: {data["use_emojis"]}.\n"""+"Question: "+message
+  - - If asked about events or information beyond your knowledge cutoff, you MUST respond with exactly one word: [OUTDATED]. Nothing else. No explanation.
+  Tone: {data["tone"]}. Length: {data["response_length"]}. Emojis: {data["use_emojis"]}.\n Question: {message}"""
 
 def return_api(api_type):
-  if api_type=="groq":
+  if (api_type=="groq" or api_type=="openrouter"):
     return get_password("pyclaw","ai_api_key")
   elif api_type=="langsearch":
     return get_password("pyclaw","langsearch_api_key")
 
-def chat(message):
+def chat(message,searched=False):
   config=load_config()
   bot_name=config["bot_name"]
+  ai_model=config['model_name']
   client = Groq(api_key=return_api("groq"))
-  chat_completion = client.chat.completions.create(
-    messages=[
-        {
-            "role": "user",
-            "content": system_prompt_constructor(message),
-        }
-    ],temperature=config['temperature'],
-    max_completion_tokens=config['max_tokens'],
-    model=config['model_name'])
-  content = chat_completion.choices[0].message.content
-  return bot_name+": "+strip_md(content)
+  try:
+    chat_completion = client.chat.completions.create(
+        messages=[
+        {"role": "user","content": system_prompt_constructor(message),}],temperature=config['temperature'],
+      max_completion_tokens=config['max_tokens'],
+      model=ai_model)
+    content = chat_completion.choices[0].message.content
+  except Exception as e:
+    return bot_name+": Sorry, the model is rate limited. Try again in a moment."
+  if "[OUTDATED]" in content and not searched:
+    return bot_name+": "+strip_md(chat(langsearch(message), searched=True))
+  else:
+    return bot_name+": "+strip_md(content)
 
 def langsearch(query):
   langsearch_api=return_api("langsearch")
-  payload = json.dumps({
+  payload = dumps({
   "query": query,
   "freshness": "noLimit",
   "summary": True,
@@ -81,5 +85,5 @@ def langsearch(query):
   'Authorization': langsearch_api,
   'Content-Type': 'application/json'
   }
-  response = requests.request("POST", url, headers=headers, data=payload)
+  response = request("POST", "https://api.langsearch.com/v1/web-search" , headers=headers, data=payload)
   return response.text
