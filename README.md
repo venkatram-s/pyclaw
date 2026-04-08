@@ -1,4 +1,7 @@
 # PyClaw
+
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/venkatram-s/pyclaw)
+
 A Python CLI for talking to AI models. Inspired by [PicoClaw](https://github.com/sipeed/picoclaw) - built with security, extensibility, and cross-platform support in mind.
 ---
 ## Table of Contents
