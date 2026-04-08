@@ -1,10 +1,7 @@
 # PyClaw
 
-<div style="display: flex; justify-content: center;">
-  <a href="https://deepwiki.com/venkatram-s/pyclaw">
-    <img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki">
-  </a>
-</div>
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/venkatram-s/pyclaw)
+
 
 A Python CLI for talking to AI models. Inspired by [PicoClaw](https://github.com/sipeed/picoclaw) - built with security, extensibility, and cross-platform support in mind.
 ---
